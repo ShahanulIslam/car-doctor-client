@@ -7,7 +7,9 @@ const Navbar = () => {
     const { logOut, user } = useContext(AuthContext)
     const handleLogOut = () => {
         logOut()
-            .then(() => { })
+            .then(() => {
+                localStorage.removeItem("car-access-token")
+            })
             .catch(error => console.error(error))
     }
 
