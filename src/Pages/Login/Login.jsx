@@ -2,12 +2,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import bg from "../../assets/images/login/login.svg"
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const Login = () => {
     const { signIn } = useContext(AuthContext)
 
     const location = useLocation();
-    const naviate = useNavigate()
+    const navigate = useNavigate()
     const from = location.state?.from?.pathname || "/";
     const handleLogin = event => {
         event.preventDefault();
@@ -17,24 +18,9 @@ const Login = () => {
         console.log(email, password)
         signIn(email, password)
             .then(result => {
-                const user = result.user;
-                const loggedUser = {
-                    email: user.email
-                }
-                console.log(loggedUser);
-                fetch("http://localhost:5000/jwt", {
-                    method: "POST",
-                    headers: {
-                        "content-type": "application/json"
-                    },
-                    body: JSON.stringify(loggedUser)
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log(data)
-                        localStorage.setItem("car-access-token", data.token);
-                        naviate(from, { replace: true })
-                    })
+                const user = result.user;         
+                navigate(from, { replace: true })
+                console.log(user);
             })
             .catch(error => {
                 console.log(error)
@@ -68,6 +54,7 @@ const Login = () => {
                             </div>
                         </form>
                         <p>New to car doctor? <Link className="text-orange-600" to="/signUp">Sign Up</Link></p>
+                        <SocialLogin></SocialLogin>
                     </div>
                 </div>
             </div>

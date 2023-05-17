@@ -23,7 +23,7 @@ const Service = () => {
             price:price,
         }
         console.log(booking)
-        fetch("http://localhost:5000/booking",{
+        fetch("https://car-doctor-server-gamma-seven.vercel.app/booking",{
             method:"POST",
             headers:{
                 "content-type" : "application/json"
